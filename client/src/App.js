@@ -25,15 +25,19 @@ function App() {
   const [clicked, setClicked] = useState(true);
   useEffect(() => {
     setLoaded(false);
-    fetch("http://localhost:5000/").then((res) => {
-      if (res.status === 200) {
+    fetch("http://localhost:5000/")
+      .then((res) => {
+        if (res.status === 200) {
+          setLoaded(true);
+          res.json().then((result) => {
+            setData(result);
+          });
+        }
+      })
+      .catch((error) => {
         setLoaded(true);
-        res.json().then((result) => {
-          console.log(result);
-          setData(result);
-        });
-      }
-    });
+        alert("Something went wrong try again");
+      });
   }, [clicked]);
   const classes = useStyles();
 
